@@ -1,0 +1,16 @@
+---
+import { RootContent } from "@/components/layout/rootContent";
+import "@/styles/globals.css";
+var pageTitle = "Person Name";
+---
+
+<html lang="en">
+  <head>
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <RootContent client:only="react">
+      <slot />
+    </RootContent>
+  </body>
+</html>
