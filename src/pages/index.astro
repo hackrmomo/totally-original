@@ -1,0 +1,13 @@
+---
+import { Button } from '@/components/ui/button'
+import PrimaryLayout from '@/layouts/primaryLayout.astro'
+import { CenteredContent } from '@/components/layout/centeredContent'
+var personName = "John Doe";
+---
+<!-- Markdown Preview - https://dillinger.io/ -->
+<PrimaryLayout>
+    <CenteredContent client:only="react">
+        <Button>Hello World</Button>
+    </CenteredContent>
+</PrimaryLayout>
+
