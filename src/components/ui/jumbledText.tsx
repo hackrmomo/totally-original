@@ -9,15 +9,17 @@ export const JumbledText = ({ text }: { text: string }) => {
   let resolvedIndices = new Array(text.length).fill(false);
   let threshold = 0.01;
   const thresholdMultiplier = 1.04 * 66.0 / text.length;
-  const [renderedText, setRenderedText] = useState<string>("");
+  const [unresolvedText, setUnresolvedText] = useState<string>("");
+  const [resolvedText, setResolvedText] = useState<string>("");
 
   useEffect(() => {
     repeatInInterval(() => {
       // start off by initializing the text to start with all -'s one by one
       if (renderedTextBase.length < text.length) {
-        renderedTextBase += "--";
+        renderedTextBase += "---";
         renderedTextBase = renderedTextBase.length > text.length ? renderedTextBase.substring(0, text.length) : renderedTextBase;
-        setRenderedText(renderedTextBase);
+        setUnresolvedText(renderedTextBase);
+        setResolvedText(renderedTextBase.replace(/-/g, " "));
       }
       // if the text is fully initialized, start resolving the text
       else {
@@ -25,21 +27,23 @@ export const JumbledText = ({ text }: { text: string }) => {
           const shouldResolveCurrentIndex = Math.random() < threshold;
           if (shouldResolveCurrentIndex && !resolvedIndices[i]) {
             renderedTextBase = renderedTextBase.substring(0, i) + text[i] + renderedTextBase.substring(i + 1);
-            setRenderedText(renderedTextBase);
             resolvedIndices[i] = true;
+            setUnresolvedText(resolvedIndices.map((resolved, index) => resolved ? ` ` : renderedTextBase[index]).join(""));
+            setResolvedText(resolvedIndices.map((resolved, index) => resolved ? renderedTextBase[index] : ` `).join(""));
             threshold *= thresholdMultiplier;
           } else if (!resolvedIndices[i]) {
             renderedTextBase = renderedTextBase.substring(0, i) + jumbledTextCipheredDictionary[Math.floor(Math.pow(Math.random(), 7) * jumbledTextCipheredDictionaryLength)] + renderedTextBase.substring(i + 1);
-            setRenderedText(renderedTextBase);
+            setUnresolvedText(resolvedIndices.map((resolved, index) => resolved ? ` ` : renderedTextBase[index]).join(""));
           }
         }
       }
-    }, 30, 10000, () => {
-      setRenderedText(text);
+    }, 50, 10000, () => {
+      setUnresolvedText("");
+      setResolvedText(text);
     });
   }, [text]);
   
-  return <StyledSpan>{renderedText}</StyledSpan>;
+  return <StyledSpan unresolvedText={`${unresolvedText}`}>{`${resolvedText}`}</StyledSpan>
 };
 
 const repeatInInterval = (func: () => void, milliseconds: number, untilMilliseconds: number, finallyDo: () => void) => {
@@ -52,8 +56,25 @@ const repeatInInterval = (func: () => void, milliseconds: number, untilMilliseco
   }, untilMilliseconds);
 }
 
-const StyledSpan = styled.span`
-  font-family: "DM Mono", monospace;
+const StyledSpan = styled.span<{ unresolvedText: string }>`
+  font-family: 'Roboto Mono', monospace;
+  position: relative;
   font-size: 1.5rem;
   padding: 1rem;
+  top: 0;
+  left: 0;
+  color: #f4dbd6;
+  white-space: pre-wrap;
+  
+  &::before {
+    content: "${props => props.unresolvedText}";
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.5rem;
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #494d64;
+    white-space: pre-wrap;
+  }
 `;
