@@ -2,12 +2,6 @@
 module.exports = {
   darkMode: ["class"],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
-  // content: [
-  //   './pages/**/*.{ts,tsx}',
-  //   './components/**/*.{ts,tsx}',
-  //   './app/**/*.{ts,tsx}',
-  //   './src/**/*.{ts,tsx}',
-	// ],
   theme: {
     container: {
       center: true,
@@ -75,7 +69,3 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 }
-
-// export default {
-//   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
-// };
