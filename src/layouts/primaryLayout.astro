@@ -2,7 +2,7 @@
 import { RootContent } from "@/components/layout/rootContent";
 import "@/styles/globals.css";
 
-export const data = await fetch(`https://hackr.sh/api/content`).then((res) => res.json());
+export const data = await fetch(`${import.meta.env.API_ENDPOINT}/content`).then((res) => res.json());
 
 const pageTitle = data?.fullName ?? "Totally Original";
 const faviconUrl = data?.faviconUrl ?? "/favicon.svg";
