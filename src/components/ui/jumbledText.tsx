@@ -4,7 +4,7 @@ import styled from "styled-components";
 const jumbledTextCipheredDictionary = ".-/?&*;:^%$#@!";
 const jumbledTextCipheredDictionaryLength = jumbledTextCipheredDictionary.length;
 
-export const JumbledText = ({ text, size, padded = false, delay = 0, backgrounded = false}: { text: string, size?: string | number, padded?: boolean, delay?: number, backgrounded?: boolean }) => {
+export const JumbledText = ({ text, size, padded = false, delay = 0, backgrounded = false, weight = "400"}: { text: string, size?: string | number, padded?: boolean, delay?: number, backgrounded?: boolean, weight?: "200" | "400" | "600" }) => {
   let renderedTextBase = ""
   let resolvedIndices = new Array(text.length).fill(false);
   let threshold = 0.01;
@@ -46,7 +46,7 @@ export const JumbledText = ({ text, size, padded = false, delay = 0, backgrounde
     }, delay); 
   }, [text]);
 
-  return <StyledSpan backgrounded={backgrounded} padded={padded} size={size} unresolvedtext={`${unresolvedtext}`}>{`${resolvedtext}`}</StyledSpan>
+  return <StyledSpan weight={weight} backgrounded={backgrounded} padded={padded} size={size} unresolvedtext={`${unresolvedtext}`}>{`${resolvedtext}`}</StyledSpan>
 };
 
 const repeatInInterval = (func: () => void, milliseconds: number, untilMilliseconds: number, finallyDo: () => void) => {
@@ -59,8 +59,9 @@ const repeatInInterval = (func: () => void, milliseconds: number, untilMilliseco
   }, untilMilliseconds);
 }
 
-const StyledSpan = styled.span<{ unresolvedtext: string, size?: string | number, padded: boolean, backgrounded: boolean }>`
+const StyledSpan = styled.span<{ unresolvedtext: string, size?: string | number, padded: boolean, backgrounded: boolean, weight: "200" | "400" | "600" }>`
   font-family: 'Roboto Mono', monospace;
+  font-weight: ${props => props.weight};
   position: relative;
   font-size: ${props => props.size ?? "1rem"};
   padding: ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} 0;
@@ -72,6 +73,7 @@ const StyledSpan = styled.span<{ unresolvedtext: string, size?: string | number,
   &::before {
     content: "${props => props.unresolvedtext}";
     font-family: 'Roboto Mono', monospace;
+    font-weight: ${props => props.weight};
     font-size: ${props => props.size ?? "1rem"};
     padding: ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} 0;
     position: absolute;

@@ -9,6 +9,7 @@ import { data } from "@/layouts/primaryLayout.astro";
   <FloatLeft client:only="react">
     <JumbledText
       padded
+      weight="600"
       text={data.primaryParagraph}
       size="2rem"
       client:only="react"
@@ -40,12 +41,14 @@ import { data } from "@/layouts/primaryLayout.astro";
             <span>
               <JumbledText
                 backgrounded
+                weight="200"
                 delay={index * 100 + 1500}
                 text={`0x${index.toString(16)}.`}
                 size="0.9rem"
                 client:only="react"
               />
               <JumbledText
+                weight="200"
                 delay={index * 100 + 1500}
                 text={`${link.title}`}
                 size="0.9rem"
