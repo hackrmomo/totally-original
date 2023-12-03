@@ -34,7 +34,7 @@ export const JumbledText = ({ text, size, padded = false, delay = 0, backgrounde
       }
       threshold *= thresholdMultiplier;
 
-    }, 75, 20000, () => {
+    }, 40, 20000, () => {
       setunresolvedtext("");
       setresolvedtext(text);
     });
