@@ -5,7 +5,7 @@ import PrimaryLayout from "@/layouts/primaryLayout.astro";
 import { CenteredContent } from "@/components/layout/centeredContent";
 import axios from "axios";
 
-const { data } = await axios.get(`https://hackr.sh/api/content`)
+const { data } = await axios.get(`${import.meta.env.API_ENDPOINT}/content`)
 ---
 
 <PrimaryLayout>
