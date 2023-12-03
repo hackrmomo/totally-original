@@ -12,7 +12,7 @@ datasource db {
 }
 
 model content {
-  id                 String @id @default(uuid())
+  id                 Int      @id @default(autoincrement())
   primaryParagraph   String
   secondaryParagraph String
   tertiaryParagraph  String
@@ -25,8 +25,9 @@ model content {
 }
 
 model link {
-  id        String  @id @default(uuid())
+  id        Int     @id @default(autoincrement())
+  title     String
   href      String
-  contentId String
+  contentId Int
   content   content @relation(fields: [contentId], references: [id])
 }

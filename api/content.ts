@@ -6,7 +6,11 @@ const prisma = new PrismaClient();
 export default async function handler(request: VercelRequest, response: VercelResponse ) {
   switch (request.method) {
     case 'GET':
-      const content = await prisma.content.findFirst();
+      const content = await prisma.content.findFirst({
+        include: {
+          links: true,
+        },
+      });
       response.status(200).json(content);
       break;
     default:

@@ -4,22 +4,21 @@ import styled from "styled-components";
 const jumbledTextCipheredDictionary = ".-/?&*;:^%$#@!";
 const jumbledTextCipheredDictionaryLength = jumbledTextCipheredDictionary.length;
 
-export const JumbledText = ({ text, size }: { text: string, size?: string | number }) => {
+export const JumbledText = ({ text, size, padded = false, delay = 0, backgrounded = false}: { text: string, size?: string | number, padded?: boolean, delay?: number, backgrounded?: boolean }) => {
   let renderedTextBase = ""
   let resolvedIndices = new Array(text.length).fill(false);
   let threshold = 0.01;
   const thresholdMultiplier = 1.1;
-  const [unresolvedText, setUnresolvedText] = useState<string>("");
-  const [resolvedText, setResolvedText] = useState<string>("");
+  // adding a space reserves the space for the text to be rendered
+  const [unresolvedtext, setunresolvedtext] = useState<string>(" ");
+  const [resolvedtext, setresolvedtext] = useState<string>(" ");
 
-  useEffect(() => {
+  const resolveText = () => {
     repeatInInterval(() => {
       // start off by initializing the text to start with all -'s one by one
       if (renderedTextBase.length < text.length) {
         renderedTextBase += jumbledTextCipheredDictionary[Math.floor(Math.pow(Math.random(), 7) * jumbledTextCipheredDictionaryLength)] + jumbledTextCipheredDictionary[Math.floor(Math.pow(Math.random(), 7) * jumbledTextCipheredDictionaryLength)]
         renderedTextBase = renderedTextBase.length > text.length ? renderedTextBase.substring(0, text.length) : renderedTextBase;
-        setUnresolvedText(renderedTextBase);
-        setResolvedText(Array(renderedTextBase.length).fill(" ").join(""));
       }
       for (let i = 0; i < Math.min(text.length, renderedTextBase.length); i++) {
         const shouldResolveCurrentIndex = Math.random() < threshold;
@@ -27,23 +26,27 @@ export const JumbledText = ({ text, size }: { text: string, size?: string | numb
         if (shouldResolveCurrentIndex && !resolvedIndices[i]) {
           renderedTextBase = renderedTextBase.substring(0, i) + text[i] + renderedTextBase.substring(i + 1);
           resolvedIndices[i] = true;
-          setUnresolvedText((resolvedIndices.map((resolved, index) => resolved ? ` ` : renderedTextBase[index]).join("")).substring(0, renderedTextBase.length));
-          setResolvedText(resolvedIndices.map((resolved, index) => resolved ? renderedTextBase[index] : ` `).join("").substring(0, renderedTextBase.length));
         } else if (!resolvedIndices[i] && shouldReshuffleCurrentIndex) {
           renderedTextBase = renderedTextBase.substring(0, i) + jumbledTextCipheredDictionary[Math.floor(Math.pow(Math.random(), 7) * jumbledTextCipheredDictionaryLength)] + renderedTextBase.substring(i + 1);
-          setUnresolvedText(resolvedIndices.map((resolved, index) => resolved ? ` ` : renderedTextBase[index]).join("").substring(0, renderedTextBase.length));
-          setResolvedText(resolvedIndices.map((resolved, index) => resolved ? renderedTextBase[index] : ` `).join("").substring(0, renderedTextBase.length));
         }
+        setunresolvedtext(resolvedIndices.map((resolved, index) => resolved ? ` ` : renderedTextBase[index]).join("").substring(0, renderedTextBase.length));
+        setresolvedtext(resolvedIndices.map((resolved, index) => resolved ? renderedTextBase[index] : ` `).join("").substring(0, renderedTextBase.length));
       }
       threshold *= thresholdMultiplier;
 
     }, 75, 20000, () => {
-      setUnresolvedText("");
-      setResolvedText(text);
+      setunresolvedtext("");
+      setresolvedtext(text);
     });
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      resolveText();
+    }, delay); 
   }, [text]);
 
-  return <StyledSpan size={size} unresolvedText={`${unresolvedText}`}>{`${resolvedText}`}</StyledSpan>
+  return <StyledSpan backgrounded={backgrounded} padded={padded} size={size} unresolvedtext={`${unresolvedtext}`}>{`${resolvedtext}`}</StyledSpan>
 };
 
 const repeatInInterval = (func: () => void, milliseconds: number, untilMilliseconds: number, finallyDo: () => void) => {
@@ -56,21 +59,21 @@ const repeatInInterval = (func: () => void, milliseconds: number, untilMilliseco
   }, untilMilliseconds);
 }
 
-const StyledSpan = styled.span<{ unresolvedText: string, size?: string | number }>`
+const StyledSpan = styled.span<{ unresolvedtext: string, size?: string | number, padded: boolean, backgrounded: boolean }>`
   font-family: 'Roboto Mono', monospace;
   position: relative;
   font-size: ${props => props.size ?? "1rem"};
-  padding: 1rem;
+  padding: ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} 0;
   top: 0;
   left: 0;
-  color: #f4dbd6;
+  color: ${props => props.backgrounded ? "#494d64" : "#f4dbd6"};
   white-space: pre-wrap;
   
   &::before {
-    content: "${props => props.unresolvedText}";
+    content: "${props => props.unresolvedtext}";
     font-family: 'Roboto Mono', monospace;
     font-size: ${props => props.size ?? "1rem"};
-    padding: 1rem;
+    padding: ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} 0;
     position: absolute;
     top: 0;
     left: 0;

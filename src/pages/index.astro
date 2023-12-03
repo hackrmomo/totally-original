@@ -1,25 +1,93 @@
 ---
-import { Button } from "@/components/ui/button";
 import { JumbledText } from "@/components/ui/jumbledText";
 import PrimaryLayout from "@/layouts/primaryLayout.astro";
-import { CenteredContent } from "@/components/layout/centeredContent";
-import axios from "axios";
-
-const { data } = await axios.get(`${import.meta.env.API_ENDPOINT}/content`)
+import { FloatLeft } from "@/components/layout/floatLeft";
+import { data } from "@/layouts/primaryLayout.astro";
 ---
 
 <PrimaryLayout>
-  <CenteredContent client:only="react">
-    <JumbledText text={data.primaryParagraph} size="2rem" client:only="react" />
+  <FloatLeft client:only="react">
     <JumbledText
+      padded
+      text={data.primaryParagraph}
+      size="2rem"
+      client:only="react"
+    />
+    <JumbledText
+      delay={500}
       text={data.secondaryParagraph}
       size="0.9rem"
       client:only="react"
     />
+    <br />
     <JumbledText
+      delay={1000}
       text={data.tertiaryParagraph}
       size="0.9rem"
       client:only="react"
     />
-  </CenteredContent>
+    <br />
+    <div class="linkList">
+      {
+        data.links.map((link: any, index: number) => (
+          <a
+            class="linkItem"
+            id={`link-${link.id}`}
+            href={link.href}
+            class="link"
+            target="_blank"
+          >
+            <span>
+              <JumbledText
+                backgrounded
+                delay={index * 100 + 1500}
+                text={`0x${index.toString(16)}.`}
+                size="0.9rem"
+                client:only="react"
+              />
+              <JumbledText
+                delay={index * 100 + 1500}
+                text={`${link.title}`}
+                size="0.9rem"
+                client:only="react"
+              />
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </FloatLeft>
 </PrimaryLayout>
+<style>
+  .linkItem {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background-color: #494d64;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    &:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+  }
+
+  .linkList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 30vh;
+    overflow: scroll;
+  }
+</style>

@@ -1,12 +1,18 @@
 ---
 import { RootContent } from "@/components/layout/rootContent";
 import "@/styles/globals.css";
-var pageTitle = "Person Name";
+import axios from "axios";
+
+export const { data } = await axios.get(`${import.meta.env.API_ENDPOINT}/content`)
+
+const pageTitle = data?.fullName ?? "Totally Original";
+const faviconUrl = data?.faviconUrl ?? "/favicon.svg";
 ---
 
 <html lang="en">
   <head>
     <title>{pageTitle}</title>
+    <link rel="icon" href={faviconUrl} />
   </head>
   <body>
     <RootContent client:only="react">
