@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { JumbledText } from "@/components/ui/jumbledText";
 import PrimaryLayout from "@/layouts/primaryLayout.astro";
 import { CenteredContent } from "@/components/layout/centeredContent";
+import axios from "axios";
 
-const content = await fetch(Astro.url.origin + "/api/content");
-const data = await content.json();
+const { data } = await axios.get(`https://hackr.sh/api/content`)
 ---
+
 <PrimaryLayout>
   <CenteredContent client:only="react">
     <JumbledText text={data.primaryParagraph} size="2rem" client:only="react" />
