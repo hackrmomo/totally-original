@@ -4,7 +4,7 @@ import styled from "styled-components";
 const jumbledTextCipheredDictionary = ".-/?&*;:^%$#@!";
 const jumbledTextCipheredDictionaryLength = jumbledTextCipheredDictionary.length;
 
-export const JumbledText = ({ text }: { text: string }) => {
+export const JumbledText = ({ text, size }: { text: string, size?: string | number }) => {
   let renderedTextBase = ""
   let resolvedIndices = new Array(text.length).fill(false);
   let threshold = 0.01;
@@ -43,7 +43,7 @@ export const JumbledText = ({ text }: { text: string }) => {
     });
   }, [text]);
 
-  return <StyledSpan unresolvedText={`${unresolvedText}`}>{`${resolvedText}`}</StyledSpan>
+  return <StyledSpan size={size} unresolvedText={`${unresolvedText}`}>{`${resolvedText}`}</StyledSpan>
 };
 
 const repeatInInterval = (func: () => void, milliseconds: number, untilMilliseconds: number, finallyDo: () => void) => {
@@ -56,10 +56,10 @@ const repeatInInterval = (func: () => void, milliseconds: number, untilMilliseco
   }, untilMilliseconds);
 }
 
-const StyledSpan = styled.span<{ unresolvedText: string }>`
+const StyledSpan = styled.span<{ unresolvedText: string, size?: string | number }>`
   font-family: 'Roboto Mono', monospace;
   position: relative;
-  font-size: 1.5rem;
+  font-size: ${props => props.size ?? "1rem"};
   padding: 1rem;
   top: 0;
   left: 0;
@@ -69,7 +69,7 @@ const StyledSpan = styled.span<{ unresolvedText: string }>`
   &::before {
     content: "${props => props.unresolvedText}";
     font-family: 'Roboto Mono', monospace;
-    font-size: 1.5rem;
+    font-size: ${props => props.size ?? "1rem"};
     padding: 1rem;
     position: absolute;
     top: 0;

@@ -3,9 +3,15 @@ import { Button } from '@/components/ui/button'
 import { JumbledText } from '@/components/ui/jumbledText'
 import PrimaryLayout from '@/layouts/primaryLayout.astro'
 import { CenteredContent } from '@/components/layout/centeredContent'
+
+const content = await fetch("http://localhost:3000/api/content")
+const data = await content.json()
 ---
 <!-- Markdown Preview - https://dillinger.io/ -->
 <PrimaryLayout>
     <CenteredContent client:only="react">
+        <JumbledText text={data.primaryParagraph} size="2rem" client:only="react" />
+        <JumbledText text={data.secondaryParagraph} size="0.9rem" client:only="react" />
+        <JumbledText text={data.tertiaryParagraph} size="0.9rem" client:only="react" />
     </CenteredContent>
 </PrimaryLayout>
