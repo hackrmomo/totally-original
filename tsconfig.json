@@ -1,6 +1,21 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "$schema": "http://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node", // this used to be "Bundler" but it won't work 
+    // "moduleResolution": "Bundler",
+    // "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    // "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "strict": true,
+
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "baseUrl": ".",

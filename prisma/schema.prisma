@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model content {
+  id                 String @id @default(uuid())
+  primaryParagraph   String
+  secondaryParagraph String
+  tertiaryParagraph  String
+  email              String
+  phone              String
+  firstName          String
+  lastName           String
+  fullName           String
+  links              link[]
+}
+
+model link {
+  id        String  @id @default(uuid())
+  href      String
+  contentId String
+  content   content @relation(fields: [contentId], references: [id])
+}
