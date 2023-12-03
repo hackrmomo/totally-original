@@ -1,0 +1,39 @@
+---
+const { id, href, target } = Astro.props as {
+  id?: string;
+  href?: string;
+  target?: string;
+};
+---
+<a class="linkItem"
+  id={id}
+  href={href}
+  target={target}
+>
+  <slot />
+</a>
+<style>
+  .linkItem {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background-color: #59618b;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    &:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+  }
+</style>

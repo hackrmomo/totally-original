@@ -21,13 +21,24 @@ model content {
   firstName          String
   lastName           String
   fullName           String
+  logoUrl            String?
   links              link[]
+  socials            social[]
 }
 
 model link {
   id        Int     @id @default(autoincrement())
   title     String
   href      String
+  contentId Int
+  content   content @relation(fields: [contentId], references: [id])
+}
+
+model social {
+  id        Int     @id @default(autoincrement())
+  title     String
+  href      String
+  faIcon    String
   contentId Int
   content   content @relation(fields: [contentId], references: [id])
 }

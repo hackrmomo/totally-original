@@ -67,7 +67,7 @@ const StyledSpan = styled.span<{ unresolvedtext: string, size?: string | number,
   padding: ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} ${props => props.padded ? "1rem" : "0"} 0;
   top: 0;
   left: 0;
-  color: ${props => props.backgrounded ? "#494d64" : "#f4dbd6"};
+  color: ${props => props.backgrounded ? "#59618b" : "#f4dbd6"};
   white-space: pre-wrap;
   
   &::before {

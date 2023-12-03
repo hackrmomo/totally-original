@@ -3,6 +3,7 @@ import { JumbledText } from "@/components/ui/jumbledText";
 import PrimaryLayout from "@/layouts/primaryLayout.astro";
 import { FloatLeft } from "@/components/layout/floatLeft";
 import { data } from "@/layouts/primaryLayout.astro";
+import Link from "@/components/ui/link.astro";
 ---
 
 <PrimaryLayout>
@@ -31,7 +32,7 @@ import { data } from "@/layouts/primaryLayout.astro";
     <div class="linkList">
       {
         data.links.map((link: any, index: number) => (
-          <a
+          <Link
             class="linkItem"
             id={`link-${link.id}`}
             href={link.href}
@@ -55,37 +56,13 @@ import { data } from "@/layouts/primaryLayout.astro";
                 client:only="react"
               />
             </span>
-          </a>
+          </Link>
         ))
       }
     </div>
   </FloatLeft>
 </PrimaryLayout>
 <style>
-  .linkItem {
-    display: inline-block;
-    position: relative;
-    text-decoration: none;
-    color: #fff;
-
-    &::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      transform: scaleX(0);
-      height: 1px;
-      bottom: 0;
-      left: 0;
-      background-color: #494d64;
-      transform-origin: bottom right;
-      transition: transform 0.25s ease-out;
-    }
-    &:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
-  }
-
   .linkList {
     display: flex;
     flex-direction: column;

@@ -9,6 +9,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       const content = await prisma.content.findFirst({
         include: {
           links: true,
+          socials: true,
         },
       });
       response.status(200).json(content);
