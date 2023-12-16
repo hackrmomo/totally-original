@@ -7,7 +7,6 @@ export const FloatLeft = styled.div`
   padding-left: 5rem;
   padding-right: 5rem;
   justify-content: center;
-  width: 100vw;
 
   @media screen and (max-width: 1024px) {
     padding-left: 2rem;

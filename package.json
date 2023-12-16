@@ -1,42 +1,30 @@
 {
-  "name": "radiant-rotation",
-  "type": "module",
-  "version": "0.0.1",
+  "name": "totally-original",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "postinstall": "prisma generate"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@astrojs/check": "^0.3.1",
-    "@astrojs/react": "^3.0.6",
-    "@astrojs/tailwind": "^5.0.2",
-    "@astrojs/vercel": "^5.2.0",
-    "@fontsource/jetbrains-mono": "^5.0.17",
-    "@prisma/client": "5.6.0",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
-    "@vercel/analytics": "^1.1.1",
-    "@vercel/node": "^3.0.11",
-    "astro": "^3.6.2",
-    "axios": "^1.6.2",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
-    "lucide-react": "^0.294.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "styled-components": "^6.1.1",
-    "tailwind-merge": "^2.0.0",
-    "tailwindcss": "^3.0.24",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.3.2"
+    "@prisma/client": "5.7.0",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "styled-components": "^6.1.1"
   },
   "devDependencies": {
-    "postcss-import": "^15.1.0",
-    "prisma": "5.6.0"
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "prisma": "5.7.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
   }
 }
