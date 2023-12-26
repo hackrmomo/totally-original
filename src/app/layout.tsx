@@ -9,6 +9,7 @@ import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
 import { Suspense, useEffect } from 'react';
 import { ContentProvider, useContent } from '@/lib/ContentContext';
 import Loading from './loading';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function App({
   children,
@@ -60,6 +61,7 @@ const RootLayout = ({
         <link rel="icon" href={content.logoUrl ?? undefined} />
       </head>
       <body>
+        <SpeedInsights />
         <StyledComponentsRegistry>
           {<Suspense fallback={<Loading />}>
             <Header />
