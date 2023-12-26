@@ -4,7 +4,9 @@ import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import StyledComponentsRegistry from '@/lib/registry'
 import "@/app/globals.css"
-import { Suspense, use, useEffect, useState } from 'react';
+import { useRouter } from "next/navigation";
+import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+import { Suspense, useEffect } from 'react';
 import { ContentProvider, useContent } from '@/lib/ContentContext';
 import Loading from './loading';
 
@@ -29,6 +31,27 @@ const RootLayout = ({
   children: React.ReactNode
 }) => {
   const content = useContent()
+  const { isAuthenticated } = useKindeBrowserClient()
+  const { push } = useRouter()
+
+  useEffect(() => {
+    // add an event listener to listen for the key combination to login/logout, cmd+ctrl+L
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.metaKey && e.ctrlKey && e.key === 'l') {
+        // toggle the login state
+        console.log('isAuthenticated', isAuthenticated)
+        if (isAuthenticated) {
+          push("/api/auth/logout")
+        } else {
+          push("/api/auth/login")
+        }
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  })
 
   return (
     <html lang="en">
