@@ -37,8 +37,6 @@ export const JumbledText = ({ text, size, padded = false, delay = 0, backgrounde
       threshold *= thresholdMultiplier;
 
     }, 40, 20000, () => {
-      setunresolvedtext("");
-      setresolvedtext(text);
     });
   }
 
@@ -46,7 +44,7 @@ export const JumbledText = ({ text, size, padded = false, delay = 0, backgrounde
     setTimeout(() => {
       resolveText();
     }, delay); 
-  }, [text]);
+  }, [text, delay]);
 
   return <StyledSpan weight={weight} backgrounded={backgrounded} padded={padded} size={size} unresolvedtext={`${unresolvedtext}`}>{`${resolvedtext}`}</StyledSpan>
 };
