@@ -16,6 +16,14 @@ const Home = () => {
         <br />
         <JumbledText delay={1000} text={content.tertiaryParagraph} size="0.9rem" />
         <br />
+        <span>
+          <JumbledText delay={1000} text="(btw shout-out to: " />
+          <Link href="https://github.com/phillip-hirsch">
+            <JumbledText delay={1000} text="Zilchmasta" size="0.9rem" />
+          </Link>
+          <JumbledText delay={1000} text=")" />
+        </span>
+        <br />
         <LinkList>
           {content.links.map((link, index) => <Link
             key={link.id}
